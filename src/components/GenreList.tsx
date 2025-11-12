@@ -8,12 +8,14 @@ import {
   ListItem,
   Spinner,
 } from "@chakra-ui/react";
+import { GrHost } from "react-icons/gr";
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;
+  selectedGenre: Genre | null;
 }
 
-const GenreList = ({ onSelectGenre }: Props) => {
+const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
 
   if (error) return null;
@@ -28,13 +30,21 @@ const GenreList = ({ onSelectGenre }: Props) => {
             <Image
               src={getCroppedImageUrl(genre.image_background)}
               alt={genre.name}
+              style={{ textOverflow: "ellipsis" }}
               boxSize="32px"
               borderRadius={8}
             />
             <Button
+              fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
               onClick={() => onSelectGenre(genre)}
               fontSize="lg"
-              variant="link"
+              height="auto"
+              flex="auto"
+              textAlign="left"
+              justifyContent="start"
+              whiteSpace="normal"
+              blockSize="auto"
+              variant="ghost"
             >
               {genre.name}
             </Button>
